@@ -1,0 +1,325 @@
+{
+  "date": "2026-11-24",
+  "scope": "Single-host CPU latency and HTTP smoke checks for two Yuanbao GGUFs",
+  "hardware": {
+    "architecture": "x86_64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "vcpus": 4,
+    "ram_kib": 12242936,
+    "os": "Ubuntu 26.04.1 LTS",
+    "kernel": "7.0.0-43-generic",
+    "starting_1m_load": 0.224609375
+  },
+  "engine": {
+    "version": "version: 1.0.0-dev (build 12676, commit d35dc4d9e)\nbuilt with GNU 11.4.0 for Linux x86_64",
+    "tag": "b12676",
+    "commit": "d35dc4d9e6827db8e08426a2340d8a71ea863cd9",
+    "asset": "llama-b12676-bin-ubuntu-x64.tar.gz",
+    "archive_sha256": "c65369a8574d096d90c593fef0e77a1ba2abfdfa7e7e9426bbf8939781ef8a07",
+    "server_sha256": "875dec651280e9dde71aeca13fa22ef05ef2c7165e5f20c87372e67944fa51e6",
+    "libgomp_package": "libgomp1_16-20260322-1ubuntu1_amd64.deb",
+    "libgomp_package_sha256": "add19738c63794d2aa9ac529d3b8aebe2e88980faecb6c1c59f07aefd6c3c314",
+    "cpu_features_reported": [
+      "AVX2",
+      "F16C",
+      "FMA",
+      "LLAMAFILE",
+      "OPENMP",
+      "REPACK"
+    ]
+  },
+  "method": {
+    "request_route": "/v1/rerank",
+    "python": "3.14.4",
+    "server_flags": [
+      "--reranking",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "18095",
+      "--no-ui",
+      "--device",
+      "none",
+      "--gpu-layers",
+      "0",
+      "--no-op-offload",
+      "--threads",
+      "3",
+      "--threads-batch",
+      "3",
+      "--threads-http",
+      "2",
+      "--parallel",
+      "8",
+      "--ctx-size",
+      "5120",
+      "--batch-size",
+      "4096",
+      "--ubatch-size",
+      "4096",
+      "--flash-attn",
+      "on",
+      "--no-cache-prompt",
+      "--cache-ram",
+      "0",
+      "--no-kv-unified",
+      "--no-context-shift",
+      "--fit",
+      "off",
+      "--log-verbosity",
+      "4"
+    ],
+    "cpu_affinity": [
+      1,
+      2,
+      3
+    ],
+    "nice": 15,
+    "threads": 3,
+    "simultaneous_servers": 1,
+    "in_flight_requests": 1,
+    "fresh_starts_per_model": 1,
+    "os_file_cache": "normal, after checksum verification",
+    "warmup": "Default engine startup warmup, then two semantic probes and one 10-document request per model",
+    "latency": "Loopback wall time through JSON decode, with complete ranked responses",
+    "memory": "GNU /usr/bin/time -v maximum resident set size (KiB)",
+    "repeat_counts": {
+      "10": 3,
+      "25": 3,
+      "50": 2
+    },
+    "flash_attention": "enabled",
+    "runtime_context_per_slot": 768
+  },
+  "fixture": {
+    "query_id": "test_query152",
+    "document_ids": [
+      "negative_test_query152_00001",
+      "negative_test_query152_00003",
+      "negative_test_query152_00008",
+      "negative_test_query152_00014",
+      "apositive_test_query1021_00000",
+      "negative_test_query1021_00000",
+      "negative_test_query1021_00001",
+      "negative_test_query1021_00003",
+      "negative_test_query1021_00008",
+      "negative_test_query1021_00010",
+      "negative_test_query1021_00017",
+      "negative_test_query1021_00020",
+      "apositive_test_query489_00000",
+      "apositive_test_query489_00002",
+      "negative_test_query489_00001",
+      "negative_test_query489_00013",
+      "negative_test_query489_00021",
+      "negative_test_query422_00011",
+      "negative_test_query422_00014",
+      "negative_test_query422_00020",
+      "negative_test_query422_00021",
+      "negative_test_query1191_00000",
+      "negative_test_query1191_00003",
+      "negative_test_query1191_00014",
+      "negative_test_query1191_00015",
+      "negative_test_query1145_00000",
+      "negative_test_query1145_00001",
+      "negative_test_query1145_00005",
+      "negative_test_query1145_00010",
+      "negative_test_query1145_00011",
+      "negative_test_query1145_00020",
+      "apositive_test_query148_00000",
+      "apositive_test_query148_00001",
+      "negative_test_query148_00009",
+      "negative_test_query148_00011",
+      "negative_test_query1123_00000",
+      "negative_test_query1123_00008",
+      "negative_test_query1123_00012",
+      "negative_test_query1123_00013",
+      "negative_test_query1123_00014",
+      "negative_test_query1123_00016",
+      "negative_test_query1166_00000",
+      "negative_test_query1166_00010",
+      "negative_test_query1166_00012",
+      "negative_test_query1166_00014",
+      "negative_test_query1166_00015",
+      "apositive_test_query268_00000",
+      "negative_test_query268_00002",
+      "negative_test_query268_00004",
+      "negative_test_query268_00008"
+    ],
+    "file_sha256": "09d898c8d0e290e5a0290c92fbdc27f0ab2a04d44e9c6ebd4d41814a9960e917",
+    "pilot_logical_sha256": "a3367f45b2650312358745c67931d004eae78233d379e570e0339719baf2b6b5",
+    "dataset_revision": "f2eac2f1f82445938af650c2a285a34dd77a16eb",
+    "document_character_cap_on_selection": [
+      300,
+      500
+    ],
+    "query_characters": 40,
+    "prompt_token_limit": 512,
+    "batches": {
+      "10": {
+        "total_prompt_tokens": 2341,
+        "pair_tokens_min": 187,
+        "pair_tokens_median": 230.5,
+        "pair_tokens_max": 273
+      },
+      "25": {
+        "total_prompt_tokens": 5761,
+        "pair_tokens_min": 187,
+        "pair_tokens_median": 226,
+        "pair_tokens_max": 275
+      },
+      "50": {
+        "total_prompt_tokens": 11440,
+        "pair_tokens_min": 187,
+        "pair_tokens_median": 226.0,
+        "pair_tokens_max": 293
+      }
+    }
+  },
+  "models": {
+    "Q8_0": {
+      "file": "Yuanbao-Reranker-0.6B-Q8_0.gguf",
+      "sha256": "4c051aa4d4ea7276fdbef78b1a97869929b241f9812ffffdeeff35b431473912",
+      "file_bytes": 639155136,
+      "startup_to_health_seconds": 1.958966673933901,
+      "peak_rss_kib": 1407492,
+      "matched_prompt_ids": 50,
+      "logged_candidate_prompts_with_zero_cached_tokens": 219,
+      "warmup_10_document_seconds": 14.120945514994673,
+      "smoke": [
+        {
+          "query": "Как отключить автопродление подписки?",
+          "ranked": [
+            {
+              "index": 1,
+              "relevance_score": 0.9434044361114502
+            },
+            {
+              "index": 0,
+              "relevance_score": 0.0004073480376973748
+            }
+          ]
+        },
+        {
+          "query": "Где поменять пароль?",
+          "ranked": [
+            {
+              "index": 0,
+              "relevance_score": 0.24974267184734344
+            },
+            {
+              "index": 1,
+              "relevance_score": 0.00029751367401331663
+            }
+          ]
+        }
+      ],
+      "warm": {
+        "10": {
+          "n": 3,
+          "samples_seconds": [
+            14.303982204990461,
+            14.18122374091763,
+            13.925706434063613
+          ],
+          "median_seconds": 14.18122374091763,
+          "min_seconds": 13.925706434063613,
+          "max_seconds": 14.303982204990461
+        },
+        "25": {
+          "n": 3,
+          "samples_seconds": [
+            35.013250586926006,
+            35.873289043898694,
+            36.863122817943804
+          ],
+          "median_seconds": 35.873289043898694,
+          "min_seconds": 35.013250586926006,
+          "max_seconds": 36.863122817943804
+        },
+        "50": {
+          "n": 2,
+          "samples_seconds": [
+            70.2037916519912,
+            71.0618729100097
+          ],
+          "median_seconds": 70.63283228100045,
+          "min_seconds": 70.2037916519912,
+          "max_seconds": 71.0618729100097
+        }
+      }
+    },
+    "Q4_K_M": {
+      "file": "Yuanbao-Reranker-0.6B-Q4_K_M.gguf",
+      "sha256": "a39920f6b15556102cd064460144cd76d6031e2432de84cb3cca93503dfa98c0",
+      "file_bytes": 396479104,
+      "startup_to_health_seconds": 2.1132798810722306,
+      "peak_rss_kib": 1379596,
+      "matched_prompt_ids": 50,
+      "logged_candidate_prompts_with_zero_cached_tokens": 219,
+      "warmup_10_document_seconds": 11.50740381097421,
+      "smoke": [
+        {
+          "query": "Как отключить автопродление подписки?",
+          "ranked": [
+            {
+              "index": 1,
+              "relevance_score": 0.9435613751411438
+            },
+            {
+              "index": 0,
+              "relevance_score": 0.0006937525467947125
+            }
+          ]
+        },
+        {
+          "query": "Где поменять пароль?",
+          "ranked": [
+            {
+              "index": 0,
+              "relevance_score": 0.3481229543685913
+            },
+            {
+              "index": 1,
+              "relevance_score": 0.0004873505386058241
+            }
+          ]
+        }
+      ],
+      "warm": {
+        "10": {
+          "n": 3,
+          "samples_seconds": [
+            11.756229121005163,
+            11.711627747048624,
+            11.519458801019937
+          ],
+          "median_seconds": 11.711627747048624,
+          "min_seconds": 11.519458801019937,
+          "max_seconds": 11.756229121005163
+        },
+        "25": {
+          "n": 3,
+          "samples_seconds": [
+            28.744265979970805,
+            28.946067955926992,
+            28.976146111031994
+          ],
+          "median_seconds": 28.946067955926992,
+          "min_seconds": 28.744265979970805,
+          "max_seconds": 28.976146111031994
+        },
+        "50": {
+          "n": 2,
+          "samples_seconds": [
+            57.97700970596634,
+            57.26734934106935
+          ],
+          "median_seconds": 57.62217952351784,
+          "min_seconds": 57.26734934106935,
+          "max_seconds": 57.97700970596634
+        }
+      }
+    }
+  },
+  "raw_trace_sha256": "11ca6752f9c8a8aaa01285f0c640b16e3d2d68c58d7d4b4227e8104cfff2333a"
+}

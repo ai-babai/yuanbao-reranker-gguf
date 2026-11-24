@@ -123,6 +123,8 @@ flowchart LR
 
 The reranker does not search on its own. It reorders what the first stage found.
 
+**Linux CPU.** On three AMD EPYC 7763 vCPUs, reranking 10 passages took a median of 11.71 s with Q4_K_M and 14.18 s with Q8_0. [CPU measurements for 10, 25 and 50 passages](results/linux-cpu.md) · [Raw timing samples](results/linux-cpu.json)
+
 ## Languages and runtimes
 
 **Languages.** Tencent lists Chinese and English and describes the source model as multilingual. Its MLDR evaluation includes Arabic, Chinese, English, French, German, Hindi, Italian, Japanese, Korean, Portuguese, Russian, Spanish and Thai. The published MLDR number is an average across those 13 languages. We benchmarked these GGUFs on Russian RuBQ. In a separate CPU check, Q8_0 put the expected passage first on two hand-written queries each in English, Chinese and Russian. [Six requests and their scores](results/language-smoke.json) ·

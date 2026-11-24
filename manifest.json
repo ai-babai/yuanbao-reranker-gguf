@@ -60,6 +60,7 @@
       "docs/qmd.md",
       "docs/open-webui.md",
       "docs/lm-studio.md"
-    ]
+    ],
+    "linux_cpu_performance": "results/linux-cpu.json"
   }
 }
