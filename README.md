@@ -9,13 +9,13 @@ Local reranking of Russian-language search results with Tencent's Yuanbao-Rerank
 
 ## Local server
 
-Download the weights with a GitHub account that has access to this repository. The draft is private. Point the server at the downloaded file.
+Download the weights with a GitHub account that has access to this private repository. Use the [tested llama.cpp build](docs/conversion.md) and put its `build/bin` directory on your `PATH`.
 
 ```sh
 gh release download v0.1.0 --repo ai-babai/yuanbao-reranker-gguf \
   --pattern 'Yuanbao-Reranker-0.6B-Q8_0.gguf' --dir ./models
 llama-server -m ./models/Yuanbao-Reranker-0.6B-Q8_0.gguf \
-  --reranking --host 127.0.0.1 --port 8091
+  --reranking --alias yuanbao --host 127.0.0.1 --port 8091
 ```
 
 ```sh
@@ -23,6 +23,8 @@ curl -sS http://127.0.0.1:8091/v1/rerank \
   -H 'Content-Type: application/json' \
   -d '{"model":"yuanbao","query":"Как отключить автопродление подписки?","documents":["Для изменения пароля откройте настройки безопасности.","Откройте раздел подписок и выключите автоматическое продление."],"top_n":2}'
 ```
+
+On Apple M4 Pro this request put the subscription passage (index 1) first with a relevance score of 0.94275. The password passage (index 0) scored 0.00046. With the same documents and the question “Где поменять пароль?”, the password passage moved to first place.
 
 For QMD, set the reranker path under `models.rerank` in the index configuration. For Open WebUI, select the external reranker and enter the full `/v1/rerank` URL. See the verified integration guides for the complete configuration and examples.
 
