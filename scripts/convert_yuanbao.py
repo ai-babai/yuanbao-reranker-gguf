@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import logging
 from pathlib import Path
+import re
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
@@ -61,6 +62,20 @@ def verify_gguf(path, file_type, classifier_rows):
     if classifier.tensor_type != gguf.GGMLQuantizationType.F32:
         raise ValueError(f"{path.name}: expected an F32 classifier")
     np.testing.assert_array_equal(classifier.data, classifier_rows)
+
+
+def run_quantizer(binary, source, output, variant):
+    result = subprocess.run(
+        [binary, "--tensor-type", r"^cls\.output\.weight$=f32", source, output, variant],
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    sys.stderr.write(result.stderr)
+    result.check_returncode()
+    # This revision prints its build banner during quantization.
+    build = re.search(r"^version: .*\(build \d+, commit ([0-9a-f]{7,40})\)$", result.stderr, re.MULTILINE)
+    if build is None or not LLAMA_REVISION.startswith(build[1]):
+        raise ValueError(f"{binary}: expected a build from llama.cpp {LLAMA_REVISION}")
 
 
 def convert(root, source):
@@ -139,10 +154,7 @@ def convert(root, source):
             ("Q4_K_M", file_types.MOSTLY_Q4_K_M),
         ]:
             output = work / f"model-{variant}.gguf"
-            subprocess.run(
-                [quantize, "--tensor-type", r"^cls\.output\.weight$=f32", bf16, output, variant],
-                check=True,
-            )
+            run_quantizer(quantize, bf16, output, variant)
             publish(variant, file_type, output)
 
 

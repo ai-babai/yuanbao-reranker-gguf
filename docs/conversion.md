@@ -1,10 +1,10 @@
 ---
 type: Build Guide
-description: Build the pinned llama.cpp tools and reproduce the three Yuanbao reranker GGUF variants.
+description: Convert Yuanbao-Reranker-0.6B to GGUF with rank pooling, build F16, Q8_0 and Q4_K_M with pinned llama.cpp, and check the yes/no classifier.
 created: "2026-11-24"
 ---
 
-# Build the Yuanbao reranker GGUFs
+# Convert Yuanbao-Reranker-0.6B to GGUF with rank pooling
 
 The recipe pins the Yuanbao BF16 checkpoint to `0101299a7937a016848d8d55b092f6e31cfa312d` and llama.cpp to `5fddd0b99888a90260736e0f734fa8e160064e03`. [Yuanbao checkpoint](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B/tree/0101299a7937a016848d8d55b092f6e31cfa312d) · [llama.cpp source](https://github.com/ggml-org/llama.cpp/tree/5fddd0b99888a90260736e0f734fa8e160064e03)
 
@@ -38,6 +38,17 @@ The converter verifies the SHA-256 of each source file. It builds the F16 file f
 - `$ROOT/weights/Yuanbao-Reranker-0.6B-F16.gguf`
 - `$ROOT/weights/Yuanbao-Reranker-0.6B-Q8_0.gguf`
 - `$ROOT/weights/Yuanbao-Reranker-0.6B-Q4_K_M.gguf`
+
+The converter checks the commit in the build banner printed by each quantization run. This revision's `llama-quantize --version` prints usage. The release quants reported `1.0.0-dev (build 1, commit 5fddd0b)` with AppleClang 17.0.0.17000013 on Darwin arm64.
+
+Compare the regenerated GGUFs against the repository's release checksums.
+
+```sh
+awk '$2 ~ /^Yuanbao-Reranker-0[.]6B-.*[.]gguf$/' SHA256SUMS |
+  (cd "$ROOT/weights" && shasum -a 256 -c -)
+```
+
+A second conversion into an empty output directory reproduced all three release SHA-256 values on Apple M4 Pro using the same pinned tool build and Python environment.
 
 ## Classifier and prompt
 
