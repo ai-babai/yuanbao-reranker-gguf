@@ -91,7 +91,7 @@ model-index:
       url: https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF/blob/v0.1.1/results/rubq-pilot.md
 ---
 
-# Yuanbao-Reranker-0.6B GGUF: Q8_0 and Q4_K_M reranker for Russian search in QMD and llama.cpp
+# Yuanbao-Reranker-0.6B GGUF: multilingual reranker for llama.cpp and QMD (Q8_0, Q4_K_M)
 
 [Русская карточка](README.ru.md) ·
 [Quick start](#quick-start) ·
@@ -103,12 +103,9 @@ model-index:
 [GitHub](https://github.com/ai-babai/yuanbao-reranker-gguf) ·
 [Original model](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B)
 
-![Yuanbao-Reranker-0.6B GGUF. For the question «Как отключить автопродление подписки?», llama-server with Q8_0 scored the subscription passage 0.943 and the password passage 0.0005. On 150 Russian RuBQ questions, Yuanbao Q8_0 ranked a relevant passage first for 113 and Qwen3-Reranker-0.6B Q8_0 for 102; nDCG@10 0.848 against 0.812.](https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF/resolve/main/assets/yuanbao-reranker-header-en.png)
+![Yuanbao-Reranker-0.6B GGUF, a multilingual reranker. Our Russian example: for the question «Как отключить автопродление подписки?», llama-server with Q8_0 scored the subscription passage 0.943 and the password passage 0.0005. On 150 Russian RuBQ questions in our check, Yuanbao Q8_0 ranked a relevant passage first for 113 and Qwen3-Reranker-0.6B Q8_0 for 102; nDCG@10 0.848 against 0.812.](https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF/resolve/main/assets/yuanbao-reranker-header-en.png)
 
-Tencent's multilingual Yuanbao-Reranker-0.6B in GGUF for local Russian search
-and RAG. Stock `llama-server --reranking` serves it at `/v1/rerank`, and QMD
-loads it through `models.rerank`. Tested on Apple Silicon with Metal and on
-CPU. Independent ai-babai conversion, not an official Tencent release.
+Tencent fine-tuned Qwen3-0.6B for multilingual search and RAG. This GGUF port of Yuanbao runs locally on English, Chinese, Russian and other languages. We tested llama.cpp on Apple Metal and CPU, QMD on Metal, and ranking quality on the Russian RuBQ benchmark. [Tencent’s paper](https://arxiv.org/abs/2611.10405)
 
 ## Files
 
@@ -182,7 +179,7 @@ stock `/v1/rerank` endpoint with a 512-token input limit. Higher is better.
 
 The original BF16 weights in PyTorch scored 0.8488 and 0.8419. The three Yuanbao files differ by at most 0.0012 nDCG@10. Q4_K_M changes which
 passage comes first more often, so Q8_0 stays the default.
-Against the Qwen3 Q8_0, Yuanbao Q8_0 gained +0.0355 nDCG@10, with a paired
+Against Qwen3-Reranker-0.6B Q8_0, Yuanbao Q8_0 gained +0.0355 nDCG@10, with a paired
 bootstrap 95% interval of +0.0184 to +0.0536.
 
 [Full results: ties, score agreement, latency and memory](results/rubq-pilot.md) ·
@@ -235,8 +232,10 @@ tested setup used Giga Embeddings for the dense search.
 ## Limitations
 
 - The quality benchmark covers Russian RuBQ. The English and Chinese checks each cover two example queries.
-- The ranking prompt is fixed in the GGUF. It uses an English web-search
-  instruction, and `/v1/rerank` does not change it per request.
+- Every request uses one built-in English instruction, "Given a web search
+  query, retrieve relevant passages that answer the query": the query and
+  documents can be in Russian, English, Chinese or other languages, but `/v1/rerank` cannot swap the
+  instruction for a task-specific one.
 - Use the score to order candidates for one question. We did not test fixed
   score thresholds.
 - The evaluation limits each input to 512 tokens. Longer passages can rank
@@ -250,7 +249,7 @@ The two models tested together in Open WebUI are listed in [Russian RAG on llama
 
 Apache-2.0, as the original model. Converted from
 [Yuanbao-Search/Yuanbao-Reranker-0.6B](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B/tree/0101299a7937a016848d8d55b092f6e31cfa312d)
-at revision `0101299`, which is derived from Qwen3. Modifications consist of the
+at revision `0101299`, which Tencent fine-tuned from Qwen3-0.6B. Modifications consist of the
 reranking GGUF conversion, prompt configuration and quantization. See
 [LICENSE](LICENSE) and [NOTICE](NOTICE). RuBQ labels are under CC BY-SA 4.0.
 [Conversion recipe](docs/conversion.md)

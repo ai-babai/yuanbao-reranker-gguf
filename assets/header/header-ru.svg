@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="722" viewBox="0 0 1000 722" role="img" aria-labelledby="title" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif">
-  <title id="title">Yuanbao-Reranker-0.6B GGUF — Реранкер для русского поиска в QMD и llama.cpp</title>
+  <title id="title">Yuanbao-Reranker-0.6B GGUF — Многоязычный реранкер для llama.cpp и QMD</title>
   <rect x="1" y="1" width="998" height="720" rx="28" fill="#fcfcfb" stroke="#dddcd6" stroke-width="2"/>
   <text x="52" y="84" font-size="44" font-weight="700" fill="#141413" text-anchor="start">Yuanbao-Reranker-0.6B GGUF</text>
   <text x="948" y="84" font-size="20" font-weight="600" fill="#6b6a65" text-anchor="end">Q8_0 · Q4_K_M · F16</text>
-  <text x="52" y="124" font-size="24" font-weight="400" fill="#55544f" text-anchor="start">Реранкер для русского поиска в QMD и llama.cpp</text>
-  <text x="52" y="184" font-size="17" font-weight="600" fill="#6b6a65" text-anchor="start" letter-spacing="1">ОДИН ВОПРОС, ДВА ФРАГМЕНТА · Q8_0 · llama-server /v1/rerank</text>
+  <text x="52" y="124" font-size="24" font-weight="400" fill="#55544f" text-anchor="start">Многоязычный реранкер для llama.cpp и QMD</text>
+  <text x="52" y="184" font-size="17" font-weight="600" fill="#6b6a65" text-anchor="start" letter-spacing="1">ПРИМЕР НА РУССКОМ · ОДИН ВОПРОС, ДВА ФРАГМЕНТА · Q8_0 · /v1/rerank</text>
   <text x="52" y="226" font-size="28" font-weight="600" fill="#141413" text-anchor="start">«Как отключить автопродление подписки?»</text>
   <circle cx="68" cy="268" r="16" fill="#2a78d6"/>
   <text x="68" y="275" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
@@ -19,7 +19,7 @@
   <rect x="100" y="382" width="4" height="12" rx="2.0" fill="#2a78d6"/>
   <text x="948" y="395" font-size="28" font-weight="700" fill="#55544f" text-anchor="end">0,0005</text>
   <line x1="52" y1="434" x2="948" y2="434" stroke="#e6e5e0" stroke-width="2"/>
-  <text x="52" y="474" font-size="17" font-weight="600" fill="#6b6a65" text-anchor="start" letter-spacing="1">RuBQ · 150 РУССКИХ ВОПРОСОВ · ОДНА СБОРКА LLAMA.CPP</text>
+  <text x="52" y="474" font-size="17" font-weight="600" fill="#6b6a65" text-anchor="start" letter-spacing="1">НАША ПРОВЕРКА НА РУССКОМ · RuBQ, 150 ВОПРОСОВ · ОДНА СБОРКА LLAMA.CPP</text>
   <rect x="52" y="501" width="14" height="14" rx="3" fill="#2a78d6"/>
   <text x="76" y="514" font-size="19" font-weight="600" fill="#141413" text-anchor="start">Yuanbao-Reranker-0.6B Q8_0</text>
   <text x="52" y="572" fill="#141413" font-weight="700"><tspan font-size="54">113</tspan><tspan font-size="26" dx="10" fill="#55544f" font-weight="600">из 150</tspan></text>

@@ -1,4 +1,4 @@
-# Yuanbao-Reranker-0.6B GGUF: реранкер для русского языка в QMD и llama.cpp
+# Yuanbao-Reranker-0.6B GGUF: многоязычный реранкер для llama.cpp и QMD (Q8_0, Q4_K_M)
 
 [English](README.md) ·
 [Быстрый старт](#быстрый-старт) ·
@@ -10,13 +10,9 @@
 [GitHub](https://github.com/ai-babai/yuanbao-reranker-gguf/blob/main/README.ru.md) ·
 [Исходная модель](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B)
 
-![Yuanbao-Reranker-0.6B GGUF. На вопрос «Как отключить автопродление подписки?» llama-server с Q8_0 дал абзацу о подписке 0,943, абзацу о пароле 0,0005. На 150 русских вопросах RuBQ Yuanbao Q8_0 поставил релевантный фрагмент первым в 113 случаях, Qwen3-Reranker-0.6B Q8_0 — в 102; nDCG@10 0,848 против 0,812.](https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF/resolve/main/assets/yuanbao-reranker-header-ru.png)
+![Yuanbao-Reranker-0.6B GGUF, многоязычный реранкер. Наш русский пример: на вопрос «Как отключить автопродление подписки?» llama-server с Q8_0 дал абзацу о подписке 0,943, абзацу о пароле 0,0005. На 150 русских вопросах RuBQ Yuanbao Q8_0 поставил релевантный фрагмент первым в 113 случаях, Qwen3-Reranker-0.6B Q8_0 — в 102; nDCG@10 0,848 против 0,812.](https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF/resolve/main/assets/yuanbao-reranker-header-ru.png)
 
-Многоязычный Yuanbao-Reranker-0.6B от Tencent в GGUF для локального поиска по
-русским текстам и RAG. Штатный `llama-server --reranking` отдаёт его через
-`/v1/rerank`, а QMD подключает через `models.rerank`. Проверено на Apple
-Silicon с Metal и на CPU. Независимая конвертация ai-babai, а не официальный
-релиз Tencent.
+Tencent дообучила Qwen3-0.6B для многоязычного поиска и RAG. В формате GGUF Yuanbao можно запускать локально для поиска по текстам на английском, китайском, русском и других языках. Мы проверили запуск в llama.cpp на Metal и CPU, интеграцию с QMD на Metal и качество ранжирования на русском бенчмарке RuBQ. [Статья Tencent](https://arxiv.org/abs/2611.10405)
 
 ## Файлы
 
@@ -89,7 +85,7 @@ Labs. Все GGUF запускались на одной сборке llama.cpp 
 Исходные веса BF16 в PyTorch дали 0,8488 и 0,8419.
 Три файла Yuanbao расходятся не больше чем на 0,0012 nDCG@10. Q4_K_M чаще
 меняет первый фрагмент, поэтому основным остаётся Q8_0.
-По сравнению с Qwen3 Q8_0 у Yuanbao Q8_0 nDCG@10 выше на 0,0355, парный
+По сравнению с Qwen3-Reranker-0.6B Q8_0 у Yuanbao Q8_0 nDCG@10 выше на 0,0355, парный
 бутстреп даёт 95-процентный интервал от +0,0184 до +0,0536.
 
 [Полные результаты: равные оценки, согласие оценок, задержка и память, англ.](results/rubq-pilot.md) ·
@@ -142,8 +138,10 @@ models:
 ## Ограничения
 
 - Бенчмарк качества охватывает русский RuBQ. Для английского и китайского проверены по два примера.
-- Промпт ранжирования зашит в GGUF. В нём английская инструкция для
-  веб-поиска, и `/v1/rerank` не меняет её от запроса к запросу.
+- Во всех запросах используется одна встроенная английская инструкция
+  «Given a web search query, retrieve relevant passages that answer the query»:
+  вопрос и документы могут быть на русском, английском, китайском и других
+  языках, но заменить инструкцию под свою задачу через `/v1/rerank` нельзя.
 - Оценка нужна, чтобы упорядочить кандидатов для одного вопроса. Фиксированные
   пороги оценки мы не проверяли.
 - В оценке вход ограничен 512 токенами. Более длинные фрагменты могут
@@ -157,7 +155,7 @@ models:
 
 Apache-2.0, как у исходной модели. Конвертировано из
 [Yuanbao-Search/Yuanbao-Reranker-0.6B](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B/tree/0101299a7937a016848d8d55b092f6e31cfa312d)
-ревизии `0101299`, основанной на Qwen3. Изменения: конвертация в GGUF для
+ревизии `0101299`, которую Tencent дообучила из Qwen3-0.6B. Изменения: конвертация в GGUF для
 ранжирования, настройка промпта и квантование. См. [LICENSE](LICENSE) и
 [NOTICE](NOTICE). Метки RuBQ распространяются по CC BY-SA 4.0.
 [Рецепт конвертации, англ.](docs/conversion.md)

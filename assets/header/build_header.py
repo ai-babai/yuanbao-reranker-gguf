@@ -23,12 +23,12 @@ FONT = "-apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif"
 
 TEXT = {
     "en": {
-        "subtitle": "Reranker for Russian search in QMD and llama.cpp",
+        "subtitle": "Multilingual reranker for llama.cpp and QMD",
         "files": "Q8_0 · Q4_K_M · F16",
-        "example": "ONE QUESTION, TWO PASSAGES · Q8_0 · llama-server /v1/rerank",
+        "example": "RUSSIAN EXAMPLE · ONE QUESTION, TWO PASSAGES · Q8_0 · /v1/rerank",
         "gloss": ["Open the subscriptions section and turn off automatic renewal.",
                   "To change the password, open the security settings."],
-        "rubq": "RuBQ · 150 RUSSIAN QUESTIONS · SAME LLAMA.CPP BUILD",
+        "rubq": "OUR RUSSIAN CHECK · RuBQ, 150 QUESTIONS · SAME LLAMA.CPP BUILD",
         "of": "of",
         "first": "relevant passage ranked first",
         "qwen": "Qwen3-Reranker-0.6B Q8_0 · QMD default",
@@ -36,11 +36,11 @@ TEXT = {
         "decimal": ".",
     },
     "ru": {
-        "subtitle": "Реранкер для русского поиска в QMD и llama.cpp",
+        "subtitle": "Многоязычный реранкер для llama.cpp и QMD",
         "files": "Q8_0 · Q4_K_M · F16",
-        "example": "ОДИН ВОПРОС, ДВА ФРАГМЕНТА · Q8_0 · llama-server /v1/rerank",
+        "example": "ПРИМЕР НА РУССКОМ · ОДИН ВОПРОС, ДВА ФРАГМЕНТА · Q8_0 · /v1/rerank",
         "gloss": None,
-        "rubq": "RuBQ · 150 РУССКИХ ВОПРОСОВ · ОДНА СБОРКА LLAMA.CPP",
+        "rubq": "НАША ПРОВЕРКА НА РУССКОМ · RuBQ, 150 ВОПРОСОВ · ОДНА СБОРКА LLAMA.CPP",
         "of": "из",
         "first": "релевантный фрагмент первым",
         "qwen": "Qwen3-Reranker-0.6B Q8_0 · штатный в QMD",

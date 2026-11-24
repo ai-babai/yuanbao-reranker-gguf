@@ -1,9 +1,9 @@
 ---
 type: Project Guide
-description: "Yuanbao-Reranker-0.6B в GGUF Q8_0 и Q4_K_M: реранкер для русского поиска в QMD и llama-server /v1/rerank на Apple Silicon и CPU, оценка на RuBQ."
+description: "Многоязычный Yuanbao-Reranker-0.6B от Tencent (дообучен из Qwen3-0.6B) в GGUF Q8_0 и Q4_K_M: llama-server /v1/rerank на Metal и CPU, QMD на Metal, проверка на русском RuBQ."
 created: "2026-11-24"
 ---
-# Yuanbao-Reranker-0.6B GGUF: реранкер для русского языка в QMD и llama.cpp
+# Yuanbao-Reranker-0.6B GGUF: многоязычный реранкер для llama.cpp и QMD (Q8_0, Q4_K_M)
 
 [English](README.md) ·
 [Hugging Face](https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF) ·
@@ -14,13 +14,9 @@ created: "2026-11-24"
 [Open WebUI + Giga Embeddings](docs/open-webui.md) ·
 [Для агентов](AGENTS.md)
 
-![Yuanbao-Reranker-0.6B GGUF. На вопрос «Как отключить автопродление подписки?» llama-server с Q8_0 дал абзацу о подписке 0,943, абзацу о пароле 0,0005. На 150 русских вопросах RuBQ Yuanbao Q8_0 поставил релевантный фрагмент первым в 113 случаях, Qwen3-Reranker-0.6B Q8_0 — в 102; nDCG@10 0,848 против 0,812.](assets/yuanbao-reranker-header-ru.png)
+![Yuanbao-Reranker-0.6B GGUF, многоязычный реранкер. Наш русский пример: на вопрос «Как отключить автопродление подписки?» llama-server с Q8_0 дал абзацу о подписке 0,943, абзацу о пароле 0,0005. На 150 русских вопросах RuBQ Yuanbao Q8_0 поставил релевантный фрагмент первым в 113 случаях, Qwen3-Reranker-0.6B Q8_0 — в 102; nDCG@10 0,848 против 0,812.](assets/yuanbao-reranker-header-ru.png)
 
-Многоязычный Yuanbao-Reranker-0.6B от Tencent в GGUF для локального поиска по
-русским текстам и RAG. Штатный `llama-server --reranking` отдаёт его через
-`/v1/rerank`, а QMD подключает через `models.rerank`. Проверено на Apple
-Silicon с Metal и на CPU. Независимая конвертация ai-babai, а не официальный
-релиз Tencent.
+Tencent дообучила Qwen3-0.6B для многоязычного поиска и RAG. В формате GGUF Yuanbao можно запускать локально для поиска по текстам на английском, китайском, русском и других языках. Мы проверили запуск в llama.cpp на Metal и CPU, интеграцию с QMD на Metal и качество ранжирования на русском бенчмарке RuBQ. [Статья Tencent](https://arxiv.org/abs/2611.10405)
 
 ## Какой файл выбрать
 
@@ -90,7 +86,7 @@ Horizon Labs. Все GGUF запускались на одной сборке ll
 Исходные веса BF16 в PyTorch на тех же вопросах дали 0,8488 и 0,8419.
 Три файла Yuanbao расходятся не больше чем на 0,0012 nDCG@10. Q4_K_M чаще
 меняет первый фрагмент, поэтому основным остаётся Q8_0.
-По сравнению с Qwen3 Q8_0 у Yuanbao Q8_0 nDCG@10 выше на 0,0355, парный
+По сравнению с Qwen3-Reranker-0.6B Q8_0 у Yuanbao Q8_0 nDCG@10 выше на 0,0355, парный
 бутстреп даёт 95-процентный интервал от +0,0184 до +0,0536. Horizon Labs
 опубликовали для BGE-Reranker-v2-m3 на этой выборке 0,8608 nDCG@10; это
 исходные веса на CUDA.
@@ -167,8 +163,10 @@ models:
 
 ## Что учесть перед использованием
 
-- Промпт ранжирования зашит в GGUF. В нём английская инструкция для
-  веб-поиска из оценки, и `/v1/rerank` не меняет её от запроса к запросу.
+- Во всех запросах используется одна встроенная английская инструкция
+  «Given a web search query, retrieve relevant passages that answer the query»:
+  вопрос и документы могут быть на русском, английском, китайском и других
+  языках, но заменить инструкцию под свою задачу через `/v1/rerank` нельзя.
 - Оценка нужна, чтобы упорядочить кандидатов для одного вопроса. Фиксированные
   пороги оценки мы не проверяли.
 - В оценке каждая пара «вопрос — фрагмент» ограничена 512 токенами. Более
@@ -203,7 +201,7 @@ uv run --script scripts/prepare_rubq.py /path/to/bench/rubq.parquet
 
 Независимая конвертация ai-babai
 [checkpoint Tencent Yuanbao Search](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B/tree/0101299a7937a016848d8d55b092f6e31cfa312d),
-основанного на Qwen3, под лицензией Apache-2.0. Изменения: конвертация в GGUF
+дообученного Tencent из Qwen3-0.6B, под лицензией Apache-2.0. Изменения: конвертация в GGUF
 для ранжирования, настройка промпта и квантование. См. [LICENSE](LICENSE) и
 [NOTICE](NOTICE). Для сравнения использован
 [GGUF ggml-org Qwen3-Reranker-0.6B-Q8_0](https://huggingface.co/ggml-org/Qwen3-Reranker-0.6B-Q8_0-GGUF/tree/a02f48bb4f057028298c21fa033da2b30d7742d5).

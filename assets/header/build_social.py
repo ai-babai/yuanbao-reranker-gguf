@@ -34,8 +34,8 @@ out = [
     f'<rect width="{W}" height="{H}" fill="{SURFACE}"/>',
     f'<rect x="0" y="0" width="{W}" height="10" fill="{ACCENT}"/>',
     text(PAD, 150, "Yuanbao-Reranker-0.6B GGUF", 76, weight=700),
-    text(PAD, 206, "Reranker for Russian search in QMD and llama.cpp", 34, MUTED),
-    text(PAD, 304, f"RuBQ · {total} RUSSIAN QUESTIONS · RELEVANT PASSAGE RANKED FIRST", 22, FAINT, 600, spacing=1.2),
+    text(PAD, 206, "Multilingual reranker for llama.cpp and QMD", 34, MUTED),
+    text(PAD, 304, f"OUR RUSSIAN CHECK · RuBQ, {total} QUESTIONS · RELEVANT PASSAGE FIRST", 22, FAINT, 600, spacing=1.2),
 ]
 track_x, track_w, y = 560, 400, 376
 for label, note, model, color, ink in rows:
@@ -51,7 +51,7 @@ out.append(text(PAD, H - 44, "Same llama.cpp build · nDCG@10 0.848 vs 0.812 · 
 
 svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
        f'role="img" aria-labelledby="title" font-family="{FONT}">\n'
-       f'  <title id="title">Yuanbao-Reranker-0.6B GGUF: relevant passage first for 113 of 150 RuBQ questions, '
+       f'  <title id="title">Yuanbao-Reranker-0.6B GGUF, multilingual reranker. Russian RuBQ check: relevant passage first for 113 of 150 questions, '
        f'102 for Qwen3-Reranker-0.6B Q8_0</title>\n  ' + "\n  ".join(out) + "\n</svg>\n")
 (HERE / "social-preview.svg").write_text(svg)
 print("ok")

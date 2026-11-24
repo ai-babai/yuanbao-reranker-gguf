@@ -1,9 +1,9 @@
 ---
 type: Project Guide
-description: "Yuanbao-Reranker-0.6B GGUF in Q8_0 and Q4_K_M for QMD and llama-server /v1/rerank on Apple Silicon and CPU, with a Russian RuBQ evaluation."
+description: "Tencent's multilingual Yuanbao-Reranker-0.6B (Qwen3-0.6B fine-tune) in GGUF Q8_0 and Q4_K_M: llama-server /v1/rerank on Metal and CPU, QMD on Metal, Russian RuBQ check."
 created: "2026-11-24"
 ---
-# Yuanbao-Reranker-0.6B GGUF: Q8_0 and Q4_K_M reranker for Russian search in QMD and llama.cpp
+# Yuanbao-Reranker-0.6B GGUF: multilingual reranker for llama.cpp and QMD (Q8_0, Q4_K_M)
 
 [Русская версия](README.ru.md) ·
 [Hugging Face](https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF) ·
@@ -14,12 +14,9 @@ created: "2026-11-24"
 [Open WebUI + Giga Embeddings](docs/open-webui.md) ·
 [For agents](AGENTS.md)
 
-![Yuanbao-Reranker-0.6B GGUF. For the question «Как отключить автопродление подписки?», llama-server with Q8_0 scored the subscription passage 0.943 and the password passage 0.0005. On 150 Russian RuBQ questions, Yuanbao Q8_0 ranked a relevant passage first for 113 and Qwen3-Reranker-0.6B Q8_0 for 102; nDCG@10 0.848 against 0.812.](assets/yuanbao-reranker-header-en.png)
+![Yuanbao-Reranker-0.6B GGUF, a multilingual reranker. Our Russian example: for the question «Как отключить автопродление подписки?», llama-server with Q8_0 scored the subscription passage 0.943 and the password passage 0.0005. On 150 Russian RuBQ questions in our check, Yuanbao Q8_0 ranked a relevant passage first for 113 and Qwen3-Reranker-0.6B Q8_0 for 102; nDCG@10 0.848 against 0.812.](assets/yuanbao-reranker-header-en.png)
 
-Tencent's multilingual Yuanbao-Reranker-0.6B in GGUF for local Russian search
-and RAG. Stock `llama-server --reranking` serves it at `/v1/rerank`, and QMD
-loads it through `models.rerank`. Tested on Apple Silicon with Metal and on
-CPU. Independent ai-babai conversion, not an official Tencent release.
+Tencent fine-tuned Qwen3-0.6B for multilingual search and RAG. This GGUF port of Yuanbao runs locally on English, Chinese, Russian and other languages. We tested llama.cpp on Apple Metal and CPU, QMD on Metal, and ranking quality on the Russian RuBQ benchmark. [Tencent’s paper](https://arxiv.org/abs/2611.10405)
 
 ## Choose a file
 
@@ -92,7 +89,7 @@ Higher is better.
 The original BF16 weights in PyTorch scored 0.8488 and 0.8419 on the same
 questions. The three Yuanbao files differ by at most 0.0012 nDCG@10. Q4_K_M changes which
 passage comes first more often, so Q8_0 stays the default.
-Against the Qwen3 Q8_0, Yuanbao Q8_0 gained +0.0355 nDCG@10, with a paired
+Against Qwen3-Reranker-0.6B Q8_0, Yuanbao Q8_0 gained +0.0355 nDCG@10, with a paired
 bootstrap 95% interval of +0.0184 to +0.0536.
 Horizon Labs published 0.8608 nDCG@10 for BGE-Reranker-v2-m3 on this sample,
 measured on CUDA with the original weights.
@@ -168,9 +165,10 @@ guide pairs it with Giga Embeddings served by a second llama-server.
 
 ## Before you rely on the scores
 
-- The ranking prompt is fixed in the GGUF. It uses the English web-search
-  instruction from the evaluation, and `/v1/rerank` does not change it per
-  request.
+- Every request uses one built-in English instruction, "Given a web search
+  query, retrieve relevant passages that answer the query": the query and
+  documents can be in Russian, English, Chinese or other languages, but `/v1/rerank` cannot swap the
+  instruction for a task-specific one.
 - Use the score to order candidates for one question. We did not test fixed
   score thresholds.
 - The evaluation limits each question–passage input to 512 tokens. Longer
@@ -205,7 +203,7 @@ The two models tested together in Open WebUI are listed in [Russian RAG on llama
 
 Independent ai-babai conversion of the
 [Tencent Yuanbao Search checkpoint](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B/tree/0101299a7937a016848d8d55b092f6e31cfa312d),
-derived from Qwen3 and released under Apache-2.0. Modifications consist of the
+fine-tuned by Tencent from Qwen3-0.6B and released under Apache-2.0. Modifications consist of the
 reranking GGUF conversion, prompt configuration and quantization. See
 [LICENSE](LICENSE) and [NOTICE](NOTICE). The comparison uses the
 [ggml-org Qwen3-Reranker-0.6B-Q8_0 GGUF](https://huggingface.co/ggml-org/Qwen3-Reranker-0.6B-Q8_0-GGUF/tree/a02f48bb4f057028298c21fa033da2b30d7742d5).
