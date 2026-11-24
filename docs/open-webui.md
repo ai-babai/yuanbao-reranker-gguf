@@ -1,10 +1,10 @@
 ---
 type: Integration Guide
-description: Connect Yuanbao GGUF to Open WebUI through llama-server and verify hybrid retrieval with Giga Embeddings.
+description: Use Yuanbao-Reranker-0.6B GGUF as the Open WebUI external reranker through llama-server /v1/rerank, with Giga Embeddings for Russian RAG.
 created: "2026-11-24"
 ---
 
-# Yuanbao reranking in Open WebUI
+# Open WebUI external reranker: Yuanbao GGUF with llama-server and Giga Embeddings
 
 Open WebUI can use Yuanbao as an external reranker. Its hybrid search combines
 BM25 with dense embeddings to select candidates. Open WebUI sends those chunks
@@ -163,4 +163,5 @@ about who played Schindler after retrieval switched to two Neeson passages.
 
 Tested with Open WebUI 0.13.4, Chroma 1.5.9, Python 3.12.11, and llama-server
 1.0.0-dev at `5fddd0b99888a90260736e0f734fa8e160064e03` for Yuanbao. The
-embedding server was llama-server 0.3.0-dev at `e750b887a`.
+embedding server was llama-server 0.3.0-dev at `e750b887a`. The reranker,
+embedding and chat servers all ran on CPU in this check.

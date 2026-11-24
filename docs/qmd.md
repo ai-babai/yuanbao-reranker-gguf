@@ -1,11 +1,12 @@
 ---
 type: Integration Guide
-description: Configure Yuanbao Q8_0 in QMD and reproduce the isolated Russian hybrid search and reranking check.
+description: Replace QMD's default reranker with Yuanbao-Reranker-0.6B Q8_0 GGUF via models.rerank and reproduce the Russian hybrid search check.
 created: "2026-11-24"
 ---
-# Yuanbao in QMD
+# Yuanbao-Reranker-0.6B GGUF as the QMD reranker
 
-QMD 2.9.0 loads `Yuanbao-Reranker-0.6B-Q8_0.gguf` directly through `models.rerank`. Its SDK and CLI both ran the packaged node-llama-cpp 3.22.3 Metal backend on Apple M4 Pro. The examples use QMD's default EmbeddingGemma and typed queries, which supply their own lexical and vector terms and skip query expansion. [QMD 2.9.0](https://github.com/tobi/qmd/releases/tag/v2.9.0) · [node-llama-cpp 3.22.3](https://github.com/withcatai/node-llama-cpp/releases/tag/v3.22.3)
+Use this guide to replace QMD's default Qwen3-Reranker-0.6B with Yuanbao for
+Russian Markdown search. QMD 2.9.0 loads `Yuanbao-Reranker-0.6B-Q8_0.gguf` directly through `models.rerank`. Its SDK and CLI both ran the packaged node-llama-cpp 3.22.3 Metal backend on Apple M4 Pro. The examples use QMD's default EmbeddingGemma and typed queries, which supply their own lexical and vector terms and skip query expansion. [QMD 2.9.0](https://github.com/tobi/qmd/releases/tag/v2.9.0) · [node-llama-cpp 3.22.3](https://github.com/withcatai/node-llama-cpp/releases/tag/v3.22.3)
 
 ## Isolated install
 
@@ -146,5 +147,16 @@ In the fixed-retrieval SDK check, `limpopo.md` held retrieval rank 1 for both qu
 - The SDK and CLI loaded the configured Yuanbao file, created 4,096-token ranking contexts with rank pooling (type 4), and called `rankAll`. The packaged runtime reported llama.cpp `v0.9.0` and 29 Metal-offloaded Yuanbao layers. The loaded 639,155,136-byte GGUF has SHA-256 `4c051aa4d4ea7276fdbef78b1a97869929b241f9812ffffdeeff35b431473912`.
 - A fresh CLI index started with zero model-cache rows. Each of four distinct hybrid searches wrote three results to SQLite's `llm_cache` and had a `rankAll` trace. The `--no-rerank` control produced zero rerank scores without adding cache rows. A warm same-model control returned cached scores without a `rankAll` call. A copy of that populated index pointed to a missing GGUF and exited with status 1 on the same question, leaving the 12 existing cache rows intact. QMD keys rerank results by the configured model identity. Use a fresh index or a new model path when replacing the bytes of a model at the same path. [QMD cache fix](https://github.com/tobi/qmd/pull/848)
 - On macOS 15.8.1 with M4 Pro, `/usr/bin/time -lp` measured 13.07 s and 1.78 s for the two subject-keyword queries, with peak RSS of 3,695,411,200 and 3,699,687,424 bytes. Two additional hybrid queries with the common keyword `Справка` took 1.93 s and 1.56 s, with peak RSS of 3,710,730,240 and 3,690,184,704 bytes. Each launched a fresh process, loaded both cached weight files, embedded one query, and reranked three chunks with empty score entries for the query. These individual timings include startup and first use of both models. The OS filesystem cache was uncontrolled.
+
+## "Failed to create any rerank context"
+
+QMD reports this error when it cannot create a ranking context for the
+configured reranker. [QMD issue #721](https://github.com/tobi/qmd/issues/721)
+shows it with another Qwen3 reranker GGUF. In the check above, QMD 2.9.0 created
+rank-pooling contexts for this Q8_0 file. If you see the error with it, compare
+the SHA-256 of the file with `SHA256SUMS` and the QMD and node-llama-cpp
+versions with the ones listed here.
+
+## Evidence
 
 Local evidence under `$GGUF_ROOT/integrations/qmd/` includes `index.yml`, `versions.txt`, `sdk.jsonl`, both `natural-*.json` results and their trace/timing logs, the `*-commands.log` command records, cache counts, `cli-missing.log`, and `verification.log`. The temporary trace delegated to the released node-llama-cpp methods with their original arguments. The check used three passages and the disposable index and documents were removed afterward.
