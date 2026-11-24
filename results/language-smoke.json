@@ -1,0 +1,147 @@
+{
+  "checkpoint": "Yuanbao-Reranker-0.6B-Q8_0.gguf",
+  "model_sha256": "4c051aa4d4ea7276fdbef78b1a97869929b241f9812ffffdeeff35b431473912",
+  "llama_cpp": "5fddd0b99888a90260736e0f734fa8e160064e03",
+  "backend": "CPU, Apple M4 Pro",
+  "description": "Two hand-written queries per language on the same two support passages in that language. This is an inference smoke check. RuBQ is the Russian quality benchmark.",
+  "requests": [
+    {
+      "language": "en",
+      "expected_first": 0,
+      "request": {
+        "model": "yuanbao",
+        "query": "How do I reset my password?",
+        "documents": [
+          "Open Security settings and choose Reset password.",
+          "Open Subscriptions and turn off automatic renewal."
+        ],
+        "top_n": 2
+      },
+      "results": [
+        {
+          "index": 0,
+          "relevance_score": 0.4338020384311676
+        },
+        {
+          "index": 1,
+          "relevance_score": 1.047238038154319e-05
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "expected_first": 1,
+      "request": {
+        "model": "yuanbao",
+        "query": "How do I turn off automatic subscription renewal?",
+        "documents": [
+          "Open Security settings and choose Reset password.",
+          "Open Subscriptions and turn off automatic renewal."
+        ],
+        "top_n": 2
+      },
+      "results": [
+        {
+          "index": 1,
+          "relevance_score": 0.6155673265457153
+        },
+        {
+          "index": 0,
+          "relevance_score": 0.00012004830205114558
+        }
+      ]
+    },
+    {
+      "language": "zh",
+      "expected_first": 0,
+      "request": {
+        "model": "yuanbao",
+        "query": "怎样重置密码？",
+        "documents": [
+          "打开安全设置，选择重置密码。",
+          "打开订阅管理，关闭自动续费。"
+        ],
+        "top_n": 2
+      },
+      "results": [
+        {
+          "index": 0,
+          "relevance_score": 0.8022304177284241
+        },
+        {
+          "index": 1,
+          "relevance_score": 3.381575515959412e-05
+        }
+      ]
+    },
+    {
+      "language": "zh",
+      "expected_first": 1,
+      "request": {
+        "model": "yuanbao",
+        "query": "如何关闭订阅自动续费？",
+        "documents": [
+          "打开安全设置，选择重置密码。",
+          "打开订阅管理，关闭自动续费。"
+        ],
+        "top_n": 2
+      },
+      "results": [
+        {
+          "index": 1,
+          "relevance_score": 0.9264830946922302
+        },
+        {
+          "index": 0,
+          "relevance_score": 8.381729276152328e-05
+        }
+      ]
+    },
+    {
+      "language": "ru",
+      "expected_first": 0,
+      "request": {
+        "model": "yuanbao",
+        "query": "Как сбросить пароль?",
+        "documents": [
+          "Откройте настройки безопасности и выберите «Сбросить пароль».",
+          "Откройте раздел подписок и отключите автоматическое продление."
+        ],
+        "top_n": 2
+      },
+      "results": [
+        {
+          "index": 0,
+          "relevance_score": 0.8531377911567688
+        },
+        {
+          "index": 1,
+          "relevance_score": 0.00048329064156860113
+        }
+      ]
+    },
+    {
+      "language": "ru",
+      "expected_first": 1,
+      "request": {
+        "model": "yuanbao",
+        "query": "Как отключить автоматическое продление подписки?",
+        "documents": [
+          "Откройте настройки безопасности и выберите «Сбросить пароль».",
+          "Откройте раздел подписок и отключите автоматическое продление."
+        ],
+        "top_n": 2
+      },
+      "results": [
+        {
+          "index": 1,
+          "relevance_score": 0.8943970203399658
+        },
+        {
+          "index": 0,
+          "relevance_score": 0.0009771976619958878
+        }
+      ]
+    }
+  ]
+}

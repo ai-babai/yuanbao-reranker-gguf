@@ -4,6 +4,7 @@ language:
   - ru
   - en
   - zh
+  - multilingual
 library_name: gguf
 pipeline_tag: text-ranking
 base_model: Yuanbao-Search/Yuanbao-Reranker-0.6B
@@ -18,6 +19,7 @@ tags:
   - russian
   - llama-cpp
   - llama-server
+  - node-llama-cpp
   - qmd
   - open-webui
   - rag
@@ -33,13 +35,14 @@ inference: false
 
 [Русская карточка](README.ru.md) ·
 [RuBQ results](results/rubq-pilot.md) ·
+[Languages and runtimes](#languages-and-runtimes) ·
 [QMD guide](docs/qmd.md) ·
 [Open WebUI guide](docs/open-webui.md) ·
 [GitHub](https://github.com/ai-babai/yuanbao-reranker-gguf) ·
 [Original model](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B)
 
 A local reranker for Russian-language search and RAG. Tencent's
-Yuanbao-Reranker-0.6B converted to GGUF with rank pooling and an embedded
+multilingual Yuanbao-Reranker-0.6B converted to GGUF with rank pooling and an embedded
 ranking prompt. Stock `llama-server --reranking` serves it at `/v1/rerank`, and
 QMD loads it through `models.rerank`. Checked on Apple Silicon with Metal and on
 CPU.
@@ -56,6 +59,20 @@ question → search: BM25, embeddings or QMD hybrid → candidate chunks
          → Yuanbao-Reranker-0.6B: /v1/rerank or QMD → chunks in score order
          → chat model context or search results
 ```
+
+## Languages and runtimes
+
+**Languages.** Tencent lists Chinese and English and describes the source model as multilingual. Its MLDR evaluation includes Arabic, Chinese, English, French, German, Hindi, Italian, Japanese, Korean, Portuguese, Russian, Spanish and Thai. The published MLDR number is an average across those 13 languages. We benchmarked these GGUFs on Russian RuBQ. In a separate CPU check, Q8_0 put the expected passage first on two hand-written queries each in English, Chinese and Russian. [Six requests and their scores](results/language-smoke.json) ·
+[Tencent model card](https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B/blob/0101299a7937a016848d8d55b092f6e31cfa312d/README.md) ·
+[Tencent benchmark task list](https://github.com/Yuanbao-Search/Yuanbao-Reranker/blob/3931311f46d3a815ad07b932d4796e54f77ff433/src/yuanbao_reranker/benchmarks.json)
+
+| Runtime | Status with these GGUF files |
+| --- | --- |
+| llama.cpp `llama-server`, `/v1/rerank` | Tested at commit `5fddd0b` on Apple Metal and CPU. |
+| node-llama-cpp 3.22.3 inside QMD 2.9.0 | Tested on Apple Metal, SDK and CLI. |
+| Open WebUI 0.13.4, External reranker | Tested through llama-server on CPU. |
+| LM Studio 0.4.25 (build 1) | Imports and loads Q8_0 as an LLM. The app API returned no ranking scores. The separate llama-server executable bundled in runtimes 2.44.0 and 2.82.0 ranked documents correctly. [Test and launch command](docs/lm-studio.md) |
+| Transformers, vLLM, `yuanbao-reranker` package | Documented by Tencent for the original safetensors weights, not for GGUF. |
 
 ## Files
 
@@ -83,6 +100,8 @@ stock `/v1/rerank` endpoint with a 512-token input limit. Higher is better.
 
 The original BF16 weights in PyTorch scored 0.8488 and 0.8419. The three Yuanbao files differ by at most 0.0012 nDCG@10. Q4_K_M changes which
 passage comes first more often, so Q8_0 stays the default.
+Against the Qwen3 Q8_0, Yuanbao Q8_0 gained +0.0355 nDCG@10, with a paired
+bootstrap 95% interval of +0.0184 to +0.0536.
 
 [Full results: ties, score agreement, latency and memory](results/rubq-pilot.md) ·
 [Reproduce the benchmark](benchmark/README.md)
@@ -136,8 +155,7 @@ tested setup used Giga Embeddings for the dense search.
 
 ## Limitations
 
-- Russian quality was measured only on this RuBQ pilot. English and Chinese
-  are listed by Tencent for the original model and were not tested here.
+- The quality benchmark covers Russian RuBQ. The English and Chinese checks each cover two example queries.
 - The ranking prompt is fixed in the GGUF. It uses an English web-search
   instruction, and `/v1/rerank` does not change it per request.
 - Use the score to order candidates for one question. We did not test fixed
