@@ -1,5 +1,6 @@
 ---
 license: apache-2.0
+thumbnail: https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF/resolve/main/assets/social-preview.png
 language:
   - ru
   - en

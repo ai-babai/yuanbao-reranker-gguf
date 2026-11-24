@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif">
+  <title id="title">Yuanbao-Reranker-0.6B GGUF: relevant passage first for 113 of 150 RuBQ questions, 102 for Qwen3-Reranker-0.6B Q8_0</title>
+  <rect width="1280" height="640" fill="#fcfcfb"/>
+  <rect x="0" y="0" width="1280" height="10" fill="#2a78d6"/>
+  <text x="96" y="150" font-size="76" font-weight="700" fill="#141413" text-anchor="start">Yuanbao-Reranker-0.6B GGUF</text>
+  <text x="96" y="206" font-size="34" font-weight="400" fill="#55544f" text-anchor="start">Reranker for Russian search in QMD and llama.cpp</text>
+  <text x="96" y="304" font-size="22" font-weight="600" fill="#6b6a65" text-anchor="start" letter-spacing="1.2">RuBQ · 150 RUSSIAN QUESTIONS · RELEVANT PASSAGE RANKED FIRST</text>
+  <text x="96" y="380" font-size="30" font-weight="600" fill="#141413" text-anchor="start">Yuanbao-Reranker-0.6B Q8_0</text>
+  <rect x="560" y="362" width="400" height="20" rx="10" fill="#ebeae5"/>
+  <rect x="560" y="362" width="301" height="20" rx="10" fill="#2a78d6"/>
+  <text x="1184" y="386" font-size="40" font-weight="700" fill="#141413" text-anchor="end">113 / 150</text>
+  <text x="96" y="476" font-size="30" font-weight="600" fill="#55544f" text-anchor="start">Qwen3-Reranker-0.6B Q8_0</text>
+  <text x="96" y="510" font-size="22" font-weight="400" fill="#6b6a65" text-anchor="start">QMD default</text>
+  <rect x="560" y="458" width="400" height="20" rx="10" fill="#ebeae5"/>
+  <rect x="560" y="458" width="272" height="20" rx="10" fill="#8f8e88"/>
+  <text x="1184" y="482" font-size="40" font-weight="700" fill="#55544f" text-anchor="end">102 / 150</text>
+  <text x="96" y="596" font-size="22" font-weight="400" fill="#6b6a65" text-anchor="start">Same llama.cpp build · nDCG@10 0.848 vs 0.812 · Apple M4 Pro</text>
+</svg>
