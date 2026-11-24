@@ -1,0 +1,20 @@
+{
+  "description": "Numbers shown in assets/yuanbao-reranker-header-{en,ru}.png. Each value is copied from the cited source.",
+  "rerank_example": {
+    "source": "README.md, section on the local /v1/rerank server; llama-server, Yuanbao-Reranker-0.6B-Q8_0.gguf, Apple M4 Pro",
+    "query": "Как отключить автопродление подписки?",
+    "results": [
+      {"index": 1, "document": "Откройте раздел подписок и выключите автоматическое продление.", "relevance_score": 0.94275},
+      {"index": 0, "document": "Для изменения пароля откройте настройки безопасности.", "relevance_score": 0.00046}
+    ]
+  },
+  "rubq": {
+    "source": "results/rubq-pilot.md and results/rubq-pilot.json; 150 queries, 3,656 pairs, llama.cpp 5fddd0b, stock /v1/rerank",
+    "queries": 150,
+    "models": {
+      "yuanbao-q8": {"label": "Yuanbao-Reranker-0.6B Q8_0", "relevant_top1": 113, "ndcg_at_10": 0.8480, "mrr_at_10": 0.8408},
+      "qwen-q8": {"label": "Qwen3-Reranker-0.6B Q8_0, ggml-org, QMD default", "relevant_top1": 102, "ndcg_at_10": 0.8124, "mrr_at_10": 0.7949}
+    },
+    "ndcg_at_10_gain": {"value": 0.0355, "ci95_low": 0.0184, "ci95_high": 0.0536, "method": "paired percentile bootstrap, 10,000 draws, seed 0"}
+  }
+}

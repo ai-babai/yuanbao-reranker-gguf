@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="774" viewBox="0 0 1000 774" role="img" aria-labelledby="title" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif">
+  <title id="title">Yuanbao-Reranker-0.6B GGUF — Reranker for Russian search in QMD and llama.cpp</title>
+  <rect x="1" y="1" width="998" height="772" rx="28" fill="#fcfcfb" stroke="#dddcd6" stroke-width="2"/>
+  <text x="52" y="84" font-size="44" font-weight="700" fill="#141413" text-anchor="start">Yuanbao-Reranker-0.6B GGUF</text>
+  <text x="948" y="84" font-size="20" font-weight="600" fill="#6b6a65" text-anchor="end">Q8_0 · Q4_K_M · F16</text>
+  <text x="52" y="124" font-size="24" font-weight="400" fill="#55544f" text-anchor="start">Reranker for Russian search in QMD and llama.cpp</text>
+  <text x="52" y="184" font-size="17" font-weight="600" fill="#6b6a65" text-anchor="start" letter-spacing="1">ONE QUESTION, TWO PASSAGES · Q8_0 · llama-server /v1/rerank</text>
+  <text x="52" y="226" font-size="28" font-weight="600" fill="#141413" text-anchor="start">«Как отключить автопродление подписки?»</text>
+  <circle cx="68" cy="268" r="16" fill="#2a78d6"/>
+  <text x="68" y="275" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="100" y="276" font-size="24" font-weight="500" fill="#141413" text-anchor="start">Откройте раздел подписок и выключите автоматическое продление.</text>
+  <text x="100" y="302" font-size="19" font-weight="400" fill="#6b6a65" text-anchor="start">Open the subscriptions section and turn off automatic renewal.</text>
+  <rect x="100" y="324" width="700" height="12" rx="6" fill="#ebeae5"/>
+  <rect x="100" y="324" width="660" height="12" rx="6" fill="#2a78d6"/>
+  <text x="948" y="337" font-size="28" font-weight="700" fill="#141413" text-anchor="end">0.943</text>
+  <circle cx="68" cy="378" r="16" fill="#ebeae5"/>
+  <text x="68" y="385" font-size="18" font-weight="700" fill="#55544f" text-anchor="middle">2</text>
+  <text x="100" y="386" font-size="24" font-weight="400" fill="#55544f" text-anchor="start">Для изменения пароля откройте настройки безопасности.</text>
+  <text x="100" y="412" font-size="19" font-weight="400" fill="#6b6a65" text-anchor="start">To change the password, open the security settings.</text>
+  <rect x="100" y="434" width="700" height="12" rx="6" fill="#ebeae5"/>
+  <rect x="100" y="434" width="4" height="12" rx="2.0" fill="#2a78d6"/>
+  <text x="948" y="447" font-size="28" font-weight="700" fill="#55544f" text-anchor="end">0.0005</text>
+  <line x1="52" y1="486" x2="948" y2="486" stroke="#e6e5e0" stroke-width="2"/>
+  <text x="52" y="526" font-size="17" font-weight="600" fill="#6b6a65" text-anchor="start" letter-spacing="1">RuBQ · 150 RUSSIAN QUESTIONS · SAME LLAMA.CPP BUILD</text>
+  <rect x="52" y="553" width="14" height="14" rx="3" fill="#2a78d6"/>
+  <text x="76" y="566" font-size="19" font-weight="600" fill="#141413" text-anchor="start">Yuanbao-Reranker-0.6B Q8_0</text>
+  <text x="52" y="624" fill="#141413" font-weight="700"><tspan font-size="54">113</tspan><tspan font-size="26" dx="10" fill="#55544f" font-weight="600">of 150</tspan></text>
+  <text x="52" y="658" font-size="20" font-weight="400" fill="#55544f" text-anchor="start">relevant passage ranked first</text>
+  <text x="52" y="686" font-size="20" font-weight="400" fill="#55544f" text-anchor="start">nDCG@10 0.848</text>
+  <rect x="494" y="553" width="14" height="14" rx="3" fill="#8f8e88"/>
+  <text x="518" y="566" font-size="19" font-weight="600" fill="#55544f" text-anchor="start">Qwen3-Reranker-0.6B Q8_0 · QMD default</text>
+  <text x="494" y="624" fill="#55544f" font-weight="700"><tspan font-size="54">102</tspan><tspan font-size="26" dx="10" fill="#55544f" font-weight="600">of 150</tspan></text>
+  <text x="494" y="658" font-size="20" font-weight="400" fill="#55544f" text-anchor="start">relevant passage ranked first</text>
+  <text x="494" y="686" font-size="20" font-weight="400" fill="#55544f" text-anchor="start">nDCG@10 0.812</text>
+  <text x="52" y="738" font-size="17" font-weight="400" fill="#6b6a65" text-anchor="start">Apple M4 Pro · llama.cpp 5fddd0b · nDCG@10 gain +0.036, 95% CI +0.018 to +0.054</text>
+</svg>
