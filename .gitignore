@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv*/
+node_modules/
+*.gguf
+*.safetensors
+*.parquet
+*.db
+*.sqlite*
+*.log
+.env
+.env.*
+.cache/
+build/
+dist/
+artifacts/

@@ -1,0 +1,10 @@
+Yuanbao-Reranker
+
+This model is built upon the Qwen3 model family.
+Copyright 2025 The Qwen team, Alibaba Group.
+Upstream model license: Apache-2.0.
+https://huggingface.co/Qwen
+
+This distribution converts Yuanbao-Reranker-0.6B to GGUF, derives its binary
+ranking head from the source weights, embeds the ranking prompt, and produces
+Q8_0 and Q4_K_M quantizations. Conversion and evaluation by ai-babai, 2026.
