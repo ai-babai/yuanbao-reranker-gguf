@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "Cite this GGUF port by Maksim Popkov (Максим Попков) alongside the original Yuanbao-Reranker model."
+title: "Yuanbao-Reranker-0.6B GGUF"
+type: software
+authors:
+  - family-names: Popkov
+    given-names: Maksim
+repository-code: "https://github.com/ai-babai/yuanbao-reranker-gguf"
+url: "https://huggingface.co/ai-babai/Yuanbao-Reranker-0.6B-GGUF"
+license: Apache-2.0
+references:
+  - type: software
+    title: "Yuanbao-Reranker-0.6B"
+    authors:
+      - name: "Yuanbao Search"
+    url: "https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-0.6B"

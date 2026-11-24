@@ -1,0 +1,65 @@
+{
+  "model_id": "ai-babai/Yuanbao-Reranker-0.6B-GGUF",
+  "revision": "v0.1.1",
+  "task": "text-ranking",
+  "format": "GGUF",
+  "recommended_file": "Yuanbao-Reranker-0.6B-Q8_0.gguf",
+  "artifacts": [
+    {
+      "file": "Yuanbao-Reranker-0.6B-Q8_0.gguf",
+      "quantization": "Q8_0",
+      "bytes": 639155136,
+      "sha256": "4c051aa4d4ea7276fdbef78b1a97869929b241f9812ffffdeeff35b431473912"
+    },
+    {
+      "file": "Yuanbao-Reranker-0.6B-Q4_K_M.gguf",
+      "quantization": "Q4_K_M",
+      "bytes": 396479104,
+      "sha256": "a39920f6b15556102cd064460144cd76d6031e2432de84cb3cca93503dfa98c0"
+    },
+    {
+      "file": "Yuanbao-Reranker-0.6B-F16.gguf",
+      "quantization": "F16",
+      "bytes": 1197634176,
+      "sha256": "5348d739e2c8f88050c5e3ced13819964d2444e94bbf939339452e17277200c5"
+    }
+  ],
+  "upstream": {
+    "id": "Yuanbao-Search/Yuanbao-Reranker-0.6B",
+    "revision": "0101299a7937a016848d8d55b092f6e31cfa312d"
+  },
+  "port_author": {
+    "name": "Максим Попков",
+    "latin_name": "Maksim Popkov",
+    "account": "ai-babai"
+  },
+  "model_license": "Apache-2.0",
+  "citation": "CITATION.cff",
+  "serving": {
+    "engine": "llama.cpp",
+    "verified_revision": "5fddd0b99888a90260736e0f734fa8e160064e03",
+    "flag": "--reranking",
+    "http_method": "POST",
+    "endpoint": "/v1/rerank",
+    "input": {
+      "query": "string",
+      "documents": "array of strings",
+      "top_n": "integer"
+    },
+    "output": "results[] ordered by decreasing relevance_score; index is zero-based in the input documents"
+  },
+  "evidence": {
+    "russian_ranking": {
+      "dataset": "mteb/RuBQReranking",
+      "scope": "Horizon pilot, 150 queries, 3656 candidate pairs, 512 prompt tokens",
+      "results": "results/rubq-pilot.json"
+    },
+    "language_examples": "results/language-smoke.json",
+    "apple_performance": "results/rubq-pilot.json",
+    "integration_guides": [
+      "docs/qmd.md",
+      "docs/open-webui.md",
+      "docs/lm-studio.md"
+    ]
+  }
+}

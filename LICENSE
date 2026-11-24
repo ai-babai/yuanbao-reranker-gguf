@@ -200,3 +200,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+GGUF port, quantization, integration code and benchmark tooling:
+Copyright (c) 2026 Максим Попков (Maksim Popkov, ai-babai).
+See NOTICE for the upstream attribution.
